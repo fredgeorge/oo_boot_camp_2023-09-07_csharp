@@ -20,4 +20,6 @@ public class Chance
         this == obj || obj is Chance other && this.Equals(other);
 
     private bool Equals(Chance other) => this._fraction == other._fraction;
+
+    public override int GetHashCode() => _fraction.GetHashCode();
 }
