@@ -25,19 +25,22 @@ public class QuantityTest
     [Fact]
     public void EqualityOfDifferentUnits()
     {
+        Assert.Equal(new Quantity(8.0, Tablespoon), new Quantity(0.5, Cup));
+        Assert.Equal(new Quantity(768, Teaspoon), new Quantity(1, Gallon));
         Assert.NotEqual(new Quantity(8.0, Tablespoon), new Quantity(8.0, Pint));
     }
 
     [Fact]
     public void Set()
     {
-        Assert.Single(new HashSet<Quantity> { new Quantity(8.0, Tablespoon), new Quantity(8.0, Tablespoon) });
-        Assert.Contains(new Quantity(8.0, Tablespoon), new HashSet<Quantity> { new Quantity(8.0, Tablespoon) });
+        Assert.Single(new HashSet<Quantity> { new(8.0, Tablespoon), new(8.0, Tablespoon) });
+        Assert.Contains(new Quantity(8.0, Tablespoon), new HashSet<Quantity> { new(8.0, Tablespoon) });
     }
 
     [Fact]
     public void Hash()
     {
         Assert.Equal(new Quantity(8.0, Tablespoon).GetHashCode(), new Quantity(8.0, Tablespoon).GetHashCode());
+        Assert.Equal(new Quantity(8.0, Tablespoon).GetHashCode(), new Quantity(0.5, Cup).GetHashCode());
     }
 }

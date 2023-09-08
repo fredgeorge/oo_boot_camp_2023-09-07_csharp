@@ -18,12 +18,13 @@ public class Quantity
         _unit = unit;
     }
 
-    public override bool Equals(object? obj) => 
+    public override bool Equals(object? obj) =>
         this == obj || obj is Quantity other && this.Equals(other);
 
-    private bool Equals(Quantity other) => 
-        this._amount == other._amount && this._unit == other._unit;
+    private bool Equals(Quantity other) => this._amount == ConvertedAmount(other);
 
-    public override int GetHashCode() => 
-        _amount.GetHashCode() * 37 + _unit.GetHashCode();
+    public override int GetHashCode() => _unit.GetHashCode(_amount);
+
+    private double ConvertedAmount(Quantity other) =>
+        this._unit.ConvertedAmount(other._amount, other._unit);
 }
