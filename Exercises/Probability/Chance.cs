@@ -37,6 +37,12 @@ namespace Exercises.Probability
         public Chance And(Chance other) => new Chance(this._fraction * other._fraction);
 
         public static Chance operator &(Chance c, Chance other) => c.And(other);
+
+
+        // DeMorgan's Law: https://en.wikipedia.org/wiki/De_Morgan%27s_laws
+        public Chance Or(Chance other) => !(!this & !other);
+
+        public static Chance operator |(Chance c, Chance other) => c.Or(other);
     }
 }
 
