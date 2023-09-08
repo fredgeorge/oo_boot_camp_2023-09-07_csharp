@@ -5,7 +5,7 @@
  */
 
 using Exercises.Quantities;
-using static Exercises.Quantities.Unit;
+using ExtensionMethods.Quantities;
 using Xunit;
 using System.Collections.Generic;
 
@@ -16,31 +16,31 @@ public class QuantityTest
     [Fact]
     public void EqualityOfLikeUnits()
     {
-        Assert.Equal(new Quantity(8.0, Tablespoon), new Quantity(8.0, Tablespoon));
-        Assert.NotEqual(new Quantity(8.0, Tablespoon), new Quantity(6.0, Tablespoon));
-        Assert.NotEqual(new Quantity(8.0, Tablespoon), new object());
-        Assert.NotEqual(new Quantity(8.0, Tablespoon), null);
+        Assert.Equal(8.0.Tablespoons(), 8.0.Tablespoons());
+        Assert.NotEqual(8.0.Tablespoons(), 6.Tablespoons());
+        Assert.NotEqual(8.0.Tablespoons(), new object());
+        Assert.NotEqual(8.0.Tablespoons(), null);
     }
 
     [Fact]
     public void EqualityOfDifferentUnits()
     {
-        Assert.Equal(new Quantity(8.0, Tablespoon), new Quantity(0.5, Cup));
-        Assert.Equal(new Quantity(768, Teaspoon), new Quantity(1, Gallon));
-        Assert.NotEqual(new Quantity(8.0, Tablespoon), new Quantity(8.0, Pint));
+        Assert.Equal(8.0.Tablespoons(), 0.5.Cups());
+        Assert.Equal(768.Teaspoons(), 1.Gallons());
+        Assert.NotEqual(8.0.Tablespoons(), 8.0.Pints());
     }
 
     [Fact]
     public void Set()
     {
-        Assert.Single(new HashSet<Quantity> { new(8.0, Tablespoon), new(8.0, Tablespoon) });
-        Assert.Contains(new Quantity(8.0, Tablespoon), new HashSet<Quantity> { new(8.0, Tablespoon) });
+        Assert.Single(new HashSet<Quantity> { 8.0.Tablespoons(), 8.0.Tablespoons() });
+        Assert.Contains(8.0.Tablespoons(), new HashSet<Quantity> { 8.0.Tablespoons() });
     }
 
     [Fact]
     public void Hash()
     {
-        Assert.Equal(new Quantity(8.0, Tablespoon).GetHashCode(), new Quantity(8.0, Tablespoon).GetHashCode());
-        Assert.Equal(new Quantity(8.0, Tablespoon).GetHashCode(), new Quantity(0.5, Cup).GetHashCode());
+        Assert.Equal(8.0.Tablespoons().GetHashCode(), 8.0.Tablespoons().GetHashCode());
+        Assert.Equal(8.0.Tablespoons().GetHashCode(), 0.5.Cups().GetHashCode());
     }
 }
