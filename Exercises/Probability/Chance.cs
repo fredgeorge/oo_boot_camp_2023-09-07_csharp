@@ -12,6 +12,8 @@ namespace Exercises.Probability
 // Understands the likelihood of something specific occurring
     public class Chance
     {
+        private const double Epsilon = 1e-9;
+        private const double CertainFraction = 1.0;
         private readonly double _fraction;
 
         internal Chance(double fraction)
@@ -22,9 +24,13 @@ namespace Exercises.Probability
         public override bool Equals(object? obj) =>
             this == obj || obj is Chance other && this.Equals(other);
 
-        private bool Equals(Chance other) => this._fraction == other._fraction;
+        private bool Equals(Chance other) => Math.Abs(this._fraction - other._fraction) < Epsilon;
 
-        public override int GetHashCode() => _fraction.GetHashCode();
+        public override int GetHashCode() => Math.Round(_fraction/Epsilon).GetHashCode();
+
+        public Chance Not() => new Chance(CertainFraction - this._fraction);
+
+        public static Chance operator !(Chance c) => c.Not();
     }
 }
 
