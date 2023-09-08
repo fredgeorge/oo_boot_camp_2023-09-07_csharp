@@ -4,6 +4,8 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Exercises.Probability;
 
 namespace Exercises.Probability
@@ -31,6 +33,10 @@ namespace Exercises.Probability
         public Chance Not() => new Chance(CertainFraction - this._fraction);
 
         public static Chance operator !(Chance c) => c.Not();
+
+        public Chance And(Chance other) => new Chance(this._fraction * other._fraction);
+
+        public static Chance operator &(Chance c, Chance other) => c.And(other);
     }
 }
 
