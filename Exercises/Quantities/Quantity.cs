@@ -21,5 +21,9 @@ public class Quantity
     public override bool Equals(object? obj) => 
         this == obj || obj is Quantity other && this.Equals(other);
 
-    private bool Equals(Quantity other) => this._amount == other._amount && this._unit == other._unit;
+    private bool Equals(Quantity other) => 
+        this._amount == other._amount && this._unit == other._unit;
+
+    public override int GetHashCode() => 
+        _amount.GetHashCode() * 37 + _unit.GetHashCode();
 }
