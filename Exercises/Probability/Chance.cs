@@ -4,22 +4,35 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
-namespace Exercises.Probability;
+using Exercises.Probability;
+
+namespace Exercises.Probability
+{
 
 // Understands the likelihood of something specific occurring
-public class Chance
-{
-    private readonly double _fraction;
-
-    public Chance(double fraction)
+    public class Chance
     {
-        _fraction = fraction;
+        private readonly double _fraction;
+
+        internal Chance(double fraction)
+        {
+            _fraction = fraction;
+        }
+
+        public override bool Equals(object? obj) =>
+            this == obj || obj is Chance other && this.Equals(other);
+
+        private bool Equals(Chance other) => this._fraction == other._fraction;
+
+        public override int GetHashCode() => _fraction.GetHashCode();
     }
+}
 
-    public override bool Equals(object? obj) => 
-        this == obj || obj is Chance other && this.Equals(other);
-
-    private bool Equals(Chance other) => this._fraction == other._fraction;
-
-    public override int GetHashCode() => _fraction.GetHashCode();
+namespace ExtensionMethods.Probability
+{
+    public static class ChanceConstructors
+    {
+        public static Chance Chance(this double fraction) => new Chance(fraction);
+        public static Chance Chance(this int wholeNumber) => new Chance(wholeNumber);
+    }
 }
