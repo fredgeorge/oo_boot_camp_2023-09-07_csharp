@@ -4,12 +4,12 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
-using System.Runtime.CompilerServices;
+using Exercises.Order;
 
 namespace Exercises.Quantities;
 
 // Undestands a specific Measurement
-public class IntervalQuantity
+public class IntervalQuantity : Orderable<IntervalQuantity>
 {
     internal const double Epsilon = 1e-9;
     protected readonly double _amount;
@@ -20,6 +20,8 @@ public class IntervalQuantity
         _amount = amount;
         _unit = unit;
     }
+
+    public bool IsBetterThan(IntervalQuantity other) => this._amount > ConvertedAmount(other);
 
     public override bool Equals(object? obj) =>
         this == obj || obj is IntervalQuantity other && this.Equals(other);
