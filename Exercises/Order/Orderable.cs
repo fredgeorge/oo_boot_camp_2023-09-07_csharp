@@ -13,12 +13,7 @@ public interface Orderable<in T>
 
 public static class OrderExtensions
 {
-    public static T Best<T>(this List<T> contestants) where T : Orderable<T>
-    {
-        var champion = contestants.First();
-        foreach (var challenger in contestants)
-            if (challenger.IsBetterThan(champion))
-                champion = challenger;
-        return champion;
-    }
+    public static T Best<T>(this List<T> contestants) where T : Orderable<T> =>
+        contestants.Aggregate(contestants.First(), (champion, challenger) => 
+            challenger.IsBetterThan(champion) ? challenger : champion);
 }
