@@ -4,15 +4,14 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
+using Exercises.Order;
 using Exercises.Probability;
 
 namespace Exercises.Probability
 {
 
 // Understands the likelihood of something specific occurring
-    public class Chance
+    public class Chance : Orderable<Chance>
     {
         private const double Epsilon = 1e-9;
         private const double CertainFraction = 1.0;
@@ -22,6 +21,8 @@ namespace Exercises.Probability
         {
             _fraction = fraction;
         }
+
+        public bool IsBetterThan(Chance other) => this._fraction < other._fraction;
 
         public override bool Equals(object? obj) =>
             this == obj || obj is Chance other && this.Equals(other);
