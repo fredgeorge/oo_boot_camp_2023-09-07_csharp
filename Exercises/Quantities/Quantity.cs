@@ -23,7 +23,10 @@ public class Quantity
     public override bool Equals(object? obj) =>
         this == obj || obj is Quantity other && this.Equals(other);
 
-    private bool Equals(Quantity other) => this._amount == ConvertedAmount(other);
+    private bool Equals(Quantity other) => 
+        this.IsCompatible(other) && this._amount == ConvertedAmount(other);
+
+    private bool IsCompatible(Quantity other) => this._unit.IsCompatible(other._unit);
 
     public override int GetHashCode() => _unit.GetHashCode(_amount);
 
