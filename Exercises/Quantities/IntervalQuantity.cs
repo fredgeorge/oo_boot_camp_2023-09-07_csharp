@@ -12,8 +12,8 @@ namespace Exercises.Quantities;
 public class IntervalQuantity
 {
     internal const double Epsilon = 1e-9;
-    private readonly double _amount;
-    private readonly Unit _unit;
+    protected readonly double _amount;
+    protected readonly Unit _unit;
 
     public IntervalQuantity(double amount, Unit unit)
     {
@@ -31,6 +31,6 @@ public class IntervalQuantity
 
     public override int GetHashCode() => _unit.GetHashCode(_amount);
 
-    private double ConvertedAmount(IntervalQuantity other) =>
+    protected double ConvertedAmount(IntervalQuantity other) =>
         this._unit.ConvertedAmount(other._amount, other._unit);
 }
