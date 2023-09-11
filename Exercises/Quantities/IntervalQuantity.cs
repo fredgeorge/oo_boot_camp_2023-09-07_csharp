@@ -11,6 +11,7 @@ namespace Exercises.Quantities;
 // Undestands a specific Measurement
 public class IntervalQuantity
 {
+    internal const double Epsilon = 1e-9;
     private readonly double _amount;
     private readonly Unit _unit;
 
@@ -24,7 +25,7 @@ public class IntervalQuantity
         this == obj || obj is IntervalQuantity other && this.Equals(other);
 
     private bool Equals(IntervalQuantity other) => 
-        this.IsCompatible(other) && this._amount == ConvertedAmount(other);
+        this.IsCompatible(other) && Math.Abs(this._amount - ConvertedAmount(other)) < Epsilon;
 
     private bool IsCompatible(IntervalQuantity other) => this._unit.IsCompatible(other._unit);
 

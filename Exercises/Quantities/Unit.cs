@@ -61,7 +61,8 @@ namespace Exercises.Quantities
             return (otherAmount - other._offset) * other._baseUnitRatio / this._baseUnitRatio + this._offset;
         }
 
-        internal int GetHashCode(double amount) => ((amount - _offset) * _baseUnitRatio).GetHashCode();
+        internal int GetHashCode(double amount) => 
+            Math.Round((amount - _offset) * _baseUnitRatio / IntervalQuantity.Epsilon).GetHashCode();
 
         internal bool IsCompatible(Unit other) => this._baseUnit == other._baseUnit;
     }

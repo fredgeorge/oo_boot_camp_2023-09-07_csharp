@@ -80,10 +80,10 @@ public class QuantityTest
         AssertBidirectionalEquality(10.Celsius(), 50.Fahrenheit());
         AssertBidirectionalEquality(100.Celsius(), 212.Fahrenheit());
         AssertBidirectionalEquality((-40).Celsius(), (-40).Fahrenheit());
-        // AssertBidirectionalEquality(325.Fahrenheit(), 3.GasMarks());
-        // AssertBidirectionalEquality(0.Celsius(), 273.15.Kelvin());
-        // AssertBidirectionalEquality(50.Fahrenheit(), 283.15.Kelvin());
-        // AssertBidirectionalEquality(50.Fahrenheit(), 509.67.Rankin());
+        AssertBidirectionalEquality(325.Fahrenheit(), 3.GasMarks());
+        AssertBidirectionalEquality(0.Celsius(), 273.15.Kelvin());
+        AssertBidirectionalEquality(50.Fahrenheit(), 283.15.Kelvin());
+        AssertBidirectionalEquality(50.Fahrenheit(), 509.67.Rankin());
     }
 
     [Fact]
