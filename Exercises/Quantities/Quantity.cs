@@ -4,6 +4,8 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
+using System.Runtime.CompilerServices;
+
 namespace Exercises.Quantities;
 
 // Undestands a specific Measurement
@@ -27,4 +29,11 @@ public class Quantity
 
     private double ConvertedAmount(Quantity other) =>
         this._unit.ConvertedAmount(other._amount, other._unit);
+
+    public static Quantity operator +(Quantity q, Quantity other) =>
+        new(q._amount + q.ConvertedAmount(other), q._unit);
+
+    public static Quantity operator -(Quantity q) => new Quantity(-q._amount, q._unit);
+
+    public static Quantity operator -(Quantity q, Quantity other) => q + -other;
 }
