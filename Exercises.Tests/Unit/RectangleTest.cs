@@ -19,6 +19,7 @@ public class RectangleTest
         Assert.Equal(24.0, new Rectangle(4.0, 6.0).Area());
         Assert.Equal(30.0, new Rectangle(5.0, 6.0).Area());
         Assert.Equal(30, new Rectangle(5, 6).Area());
+        Assert.Equal(36.0, Rectangle.Square(6.0).Area());
     }
 
     [Fact]
@@ -27,6 +28,7 @@ public class RectangleTest
         Assert.Equal(20.0, new Rectangle(4.0, 6.0).Perimeter());
         Assert.Equal(22.0, new Rectangle(5.0, 6.0).Perimeter());
         Assert.Equal(22, new Rectangle(5, 6).Perimeter());
+        Assert.Equal(24.0, Rectangle.Square(6.0).Perimeter());
     }
 
     [Fact]
@@ -34,5 +36,6 @@ public class RectangleTest
     {
         Assert.Throws<ArgumentException>(() => new Rectangle(0.0, 6.0));
         Assert.Throws<ArgumentException>(() => new Rectangle(4.0, 0.0));
+        Assert.Throws<ArgumentException>(() => Rectangle.Square(0.0));
     }
 }

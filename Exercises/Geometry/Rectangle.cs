@@ -4,6 +4,9 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
+
 namespace Exercises.Geometry;
 
 public class Rectangle {
@@ -16,6 +19,8 @@ public class Rectangle {
         _length = length;
         _width = width;
     }
+
+    public static Rectangle Square(double side) => new(side, side);
 
     public double Area() => _length * _width;
 
