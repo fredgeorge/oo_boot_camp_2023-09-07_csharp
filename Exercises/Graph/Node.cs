@@ -32,15 +32,8 @@ public class Node
     private double HopCount(Node destination, List<Node> visitedNodes)
     {
         if (this == destination) return 0;
-        if (visitedNodes.Contains(this)) return Unreachable;
-        var champion = Unreachable;
-        foreach (var neighbor in _neighbors)
-        {
-            var challenger = neighbor.HopCount(destination, CopyWithThis(visitedNodes)) + 1;
-            if (challenger < champion) champion = challenger;
-        }
-
-        return champion;
+        if (visitedNodes.Contains(this) || _neighbors.Count == 0) return Unreachable;
+        return _neighbors.Min(n => n.HopCount(destination, CopyWithThis(visitedNodes)) + 1);
     }
 
     private List<Node> NoVisitedNodes() => new();
