@@ -30,11 +30,10 @@ public class Node
     {
         if (this == destination) return 0;
         if (visitedNodes.Contains(this)) return Unreachable;
-        visitedNodes.Add(this);
         var champion = Unreachable;
         foreach (var neighbor in _neighbors)
         {
-            var challenger = neighbor.HopCount(destination, visitedNodes);
+            var challenger = neighbor.HopCount(destination, CopyWithThis(visitedNodes));
             if (challenger == Unreachable) continue;
             if (champion == Unreachable || challenger + 1 < champion) champion = challenger + 1;
         }
@@ -43,4 +42,6 @@ public class Node
     }
 
     private List<Node> NoVisitedNodes() => new();
+
+    private List<Node> CopyWithThis(List<Node> originals) => new(originals) { this };
 }
