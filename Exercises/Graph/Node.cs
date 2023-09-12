@@ -16,17 +16,14 @@ public class Node
         return neighbor;
     }
 
-    public bool CanReach(Node destinaton) => CanReach(destinaton, NoVisitedNodes());
+    public bool CanReach(Node destination) => CanReach(destination, NoVisitedNodes());
 
     private bool CanReach(Node destination, List<Node> visitedNodes)
     {
         if (this == destination) return true;
         if (visitedNodes.Contains(this)) return false;
         visitedNodes.Add(this);
-        foreach (var neighbor in _neighbors)
-            if (neighbor.CanReach(destination, visitedNodes)) 
-                return true;
-        return false;
+        return _neighbors.Any(n=>n.CanReach(destination, visitedNodes));
     }
 
     private List<Node> NoVisitedNodes() => new();
