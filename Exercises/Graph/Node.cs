@@ -4,12 +4,14 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
+using static System.Double;
+
 namespace Exercises.Graph;
 
 // Understands its neighbors
 public class Node
 {
-    private const int Unreachable = -1;
+    private const double Unreachable = PositiveInfinity;
     private readonly List<Node> _neighbors = new();
     public Node To(Node neighbor)
     {
@@ -23,10 +25,10 @@ public class Node
     {
         var result = HopCount(destination, NoVisitedNodes());
         if (result == Unreachable) throw new ArgumentException("Destination is unreachable");
-        return result;
+        return (int)result;
     }
 
-    private int HopCount(Node destination, List<Node> visitedNodes)
+    private double HopCount(Node destination, List<Node> visitedNodes)
     {
         if (this == destination) return 0;
         if (visitedNodes.Contains(this)) return Unreachable;
