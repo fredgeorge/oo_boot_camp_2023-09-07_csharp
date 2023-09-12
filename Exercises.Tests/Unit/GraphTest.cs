@@ -49,7 +49,7 @@ public class GraphTest
         Assert.Equal(1, B.HopCount(A));
         Assert.Equal(1, B.HopCount(F));
         Assert.Equal(2, B.HopCount(D));
-        Assert.Equal(4, C.HopCount(F));
+        Assert.Equal(3, C.HopCount(F));
         Assert.Throws<ArgumentException>(() => A.HopCount(B));
         Assert.Throws<ArgumentException>(() => G.HopCount(B));
         Assert.Throws<ArgumentException>(() => B.HopCount(G));
