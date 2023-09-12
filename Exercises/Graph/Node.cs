@@ -13,6 +13,7 @@ public class Node
 {
     private const double Unreachable = PositiveInfinity;
     private readonly List<Node> _neighbors = new();
+
     public Node To(Node neighbor)
     {
         _neighbors.Add(neighbor);
@@ -35,9 +36,8 @@ public class Node
         var champion = Unreachable;
         foreach (var neighbor in _neighbors)
         {
-            var challenger = neighbor.HopCount(destination, CopyWithThis(visitedNodes));
-            if (challenger == Unreachable) continue;
-            if (champion == Unreachable || challenger + 1 < champion) champion = challenger + 1;
+            var challenger = neighbor.HopCount(destination, CopyWithThis(visitedNodes)) + 1;
+            if (challenger < champion) champion = challenger;
         }
 
         return champion;
