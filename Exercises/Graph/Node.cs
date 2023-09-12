@@ -17,21 +17,13 @@ public class Node
         return neighbor;
     }
 
-    public bool CanReach(Node destination) => CanReach(destination, NoVisitedNodes());
+    public bool CanReach(Node destination) => HopCount(destination, NoVisitedNodes()) != Unreachable;
 
     public int HopCount(Node destination)
     {
         var result = HopCount(destination, NoVisitedNodes());
         if (result == Unreachable) throw new ArgumentException("Destination is unreachable");
         return result;
-    }
-
-    private bool CanReach(Node destination, List<Node> visitedNodes)
-    {
-        if (this == destination) return true;
-        if (visitedNodes.Contains(this)) return false;
-        visitedNodes.Add(this);
-        return _neighbors.Any(n => n.CanReach(destination, visitedNodes));
     }
 
     private int HopCount(Node destination, List<Node> visitedNodes)
