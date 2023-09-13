@@ -23,6 +23,16 @@ internal class Link
         _target = target;
     }
 
+    internal static double Cost(List<Link> links) => links.Sum(l => l._cost);
+
     internal double Cost(Node destination, List<Node> visitedNodes, CostStrategy strategy) =>
         _target.Cost(destination, visitedNodes, strategy) + strategy(_cost);
+
+    internal Path? Path(Node destination, List<Node> visitedNodes) =>
+        _target.Path(destination, visitedNodes)?.Prepend(this);
+}
+
+public static class LinkExtensions
+{
+    internal static double Cost(this List<Link> links) => Link.Cost(links);
 }
