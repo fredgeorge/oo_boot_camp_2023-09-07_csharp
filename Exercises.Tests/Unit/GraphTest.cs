@@ -5,14 +5,12 @@
  */
 
 using System;
-using System.Xml.Linq;
 using Exercises.Graph;
 using Xunit;
 
 namespace Exercises.Tests.Unit;
 public class GraphTest
 {
-
     private static readonly Node A = new();
     private static readonly Node B = new();
     private static readonly Node C = new();
