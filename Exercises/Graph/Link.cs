@@ -18,6 +18,9 @@ internal class Link
         _target = target;
     }
 
-    internal double HopCount(Node destination, List<Node> visitedNodes) => 
+    internal double HopCount(Node destination, List<Node> visitedNodes) =>
         _target.HopCount(destination, visitedNodes) + 1;
+
+    internal double Cost(Node destination, List<Node> visitedNodes) =>
+        _target.Cost(destination, visitedNodes) + _cost;
 }

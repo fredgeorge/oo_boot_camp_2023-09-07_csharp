@@ -23,6 +23,20 @@ public class Node
         return (int)result;
     }
 
+    public double Cost(Node destination)
+    {
+        var result = Cost(destination, NoVisitedNodes());
+        if (result == Unreachable) throw new ArgumentException("Destination is unreachable");
+        return result;
+    }
+
+    internal double Cost(Node destination, List<Node> visitedNodes)
+    {
+        if (this == destination) return 0;
+        if (visitedNodes.Contains(this) || _links.Count == 0) return Unreachable;
+        return _links.Min(link => link.Cost(destination, CopyWithThis(visitedNodes)));
+    }
+
     internal double HopCount(Node destination, List<Node> visitedNodes)
     {
         if (this == destination) return 0;

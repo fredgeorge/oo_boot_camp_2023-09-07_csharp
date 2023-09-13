@@ -52,4 +52,17 @@ public class GraphTest
         Assert.Throws<ArgumentException>(() => G.HopCount(B));
         Assert.Throws<ArgumentException>(() => B.HopCount(G));
     }
+
+    [Fact]
+    public void Cost()
+    {
+        Assert.Equal(0, A.Cost(A));
+        Assert.Equal(5, B.Cost(A));
+        Assert.Equal(4, B.Cost(F));
+        Assert.Equal(7, B.Cost(D));
+        Assert.Equal(10, C.Cost(F));
+        Assert.Throws<ArgumentException>(() => A.Cost(B));
+        Assert.Throws<ArgumentException>(() => G.Cost(B));
+        Assert.Throws<ArgumentException>(() => B.Cost(G));
+    }
 }
