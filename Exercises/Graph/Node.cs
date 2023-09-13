@@ -6,6 +6,7 @@
 
 using static System.Double;
 using static Exercises.Graph.Link;
+using static Exercises.Graph.Path;
 
 namespace Exercises.Graph;
 
@@ -30,7 +31,7 @@ public class Node
 
     internal Path? Path(Node destination, List<Node> visitedNodes)
     {
-        if (this == destination) return new Path();
+        if (this == destination) return new ActualPath();
         if (visitedNodes.Contains(this)) return null;
         Path? champion = null;
         foreach (var link in _links)

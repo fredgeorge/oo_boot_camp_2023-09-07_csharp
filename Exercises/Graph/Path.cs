@@ -7,19 +7,29 @@
 namespace Exercises.Graph;
 
 // Understands a route from one Node to another Node
-public class Path
+public interface Path
 {
-    private readonly List<Link> _links = new();
-    internal Path() { }
 
-    public double Cost() => _links.Cost();
+    public double Cost();
 
-    public int HopCount() => _links.Count;
+    public int HopCount();
 
-    internal Path Prepend(Link link)
+    internal Path Prepend(Link link);
+
+    internal class ActualPath: Path
     {
-        _links.Add(link);
-        return this;
-    }
+        private readonly List<Link> _links = new();
+        internal ActualPath() { }
 
+        public double Cost() => _links.Cost();
+
+        public int HopCount() => _links.Count;
+
+        Path Path.Prepend(Link link)
+        {
+            _links.Add(link);
+            return this;
+        }
+
+    }
 }
