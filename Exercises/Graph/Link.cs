@@ -9,6 +9,9 @@ namespace Exercises.Graph;
 // Understands a connection from one Node to another Node
 internal class Link
 {
+    internal delegate double CostStrategy(double cost);
+
+    internal static CostStrategy LeastCost = cost => cost;
     private readonly double _cost;
     private readonly Node _target;
 
@@ -21,6 +24,6 @@ internal class Link
     internal double HopCount(Node destination, List<Node> visitedNodes) =>
         _target.HopCount(destination, visitedNodes) + 1;
 
-    internal double Cost(Node destination, List<Node> visitedNodes) =>
-        _target.Cost(destination, visitedNodes) + _cost;
+    internal double Cost(Node destination, List<Node> visitedNodes, CostStrategy strategy) =>
+        _target.Cost(destination, visitedNodes, strategy) + strategy(_cost);
 }

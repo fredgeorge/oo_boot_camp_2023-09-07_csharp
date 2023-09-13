@@ -5,6 +5,7 @@
  */
 
 using static System.Double;
+using static Exercises.Graph.Link;
 
 namespace Exercises.Graph;
 
@@ -25,16 +26,16 @@ public class Node
 
     public double Cost(Node destination)
     {
-        var result = Cost(destination, NoVisitedNodes());
+        var result = Cost(destination, NoVisitedNodes(), LeastCost);
         if (result == Unreachable) throw new ArgumentException("Destination is unreachable");
         return result;
     }
 
-    internal double Cost(Node destination, List<Node> visitedNodes)
+    internal double Cost(Node destination, List<Node> visitedNodes, CostStrategy strategy)
     {
         if (this == destination) return 0;
         if (visitedNodes.Contains(this) || _links.Count == 0) return Unreachable;
-        return _links.Min(link => link.Cost(destination, CopyWithThis(visitedNodes)));
+        return _links.Min(link => link.Cost(destination, CopyWithThis(visitedNodes), strategy));
     }
 
     internal double HopCount(Node destination, List<Node> visitedNodes)
