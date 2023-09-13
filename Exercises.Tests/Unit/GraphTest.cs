@@ -21,10 +21,10 @@ public class GraphTest
 
     static GraphTest()
     {
-        B.To(A);
-        B.To(C).To(D).To(E).To(B).To(F);
-        C.To(D);
-        C.To(E);
+        B.Cost(5).To(A);
+        B.Cost(6).To(C).Cost(7).To(D).Cost(2).To(E).Cost(3).To(B).Cost(4).To(F);
+        C.Cost(1).To(D);
+        C.Cost(8).To(E);
     }
 
     [Fact]

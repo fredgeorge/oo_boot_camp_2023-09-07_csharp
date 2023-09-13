@@ -14,12 +14,6 @@ public class Node
     private const double Unreachable = PositiveInfinity;
     private readonly List<Link> _links = new();
 
-    public Node To(Node neighbor)
-    {
-        _links.Add(new Link(neighbor));
-        return neighbor;
-    }
-
     public bool CanReach(Node destination) => HopCount(destination, NoVisitedNodes()) != Unreachable;
 
     public int HopCount(Node destination)
@@ -39,4 +33,24 @@ public class Node
     private List<Node> NoVisitedNodes() => new();
 
     private List<Node> CopyWithThis(List<Node> originals) => new(originals) { this };
+
+    public LinkBuilder Cost(double amount) => new LinkBuilder(amount, _links);
+
+    public class LinkBuilder
+    {
+        private readonly double _cost;
+        private readonly List<Link> _links;
+
+        internal LinkBuilder(double cost, List<Link> links)
+        {
+            _cost = cost;
+            _links = links;
+        }
+
+        public Node To(Node neighbor)
+        {
+            _links.Add(new Link(_cost, neighbor));
+            return neighbor;
+        }
+    }
 }

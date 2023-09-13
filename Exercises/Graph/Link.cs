@@ -9,10 +9,12 @@ namespace Exercises.Graph;
 // Understands a connection from one Node to another Node
 internal class Link
 {
+    private readonly double _cost;
     private readonly Node _target;
 
-    internal Link(Node target)
+    internal Link(double cost, Node target)
     {
+        _cost = cost;
         _target = target;
     }
 
