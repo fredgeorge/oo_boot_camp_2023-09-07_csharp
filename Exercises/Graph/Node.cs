@@ -15,11 +15,11 @@ public class Node
     private const double Unreachable = PositiveInfinity;
     private readonly List<Link> _links = new();
 
-    public bool CanReach(Node destination) => HopCount(destination, NoVisitedNodes()) != Unreachable;
+    public bool CanReach(Node destination) => Cost(destination, NoVisitedNodes(), FewestHops) != Unreachable;
 
     public int HopCount(Node destination)
     {
-        var result = HopCount(destination, NoVisitedNodes());
+        var result = Cost(destination, NoVisitedNodes(), FewestHops);
         if (result == Unreachable) throw new ArgumentException("Destination is unreachable");
         return (int)result;
     }
@@ -36,13 +36,6 @@ public class Node
         if (this == destination) return 0;
         if (visitedNodes.Contains(this) || _links.Count == 0) return Unreachable;
         return _links.Min(link => link.Cost(destination, CopyWithThis(visitedNodes), strategy));
-    }
-
-    internal double HopCount(Node destination, List<Node> visitedNodes)
-    {
-        if (this == destination) return 0;
-        if (visitedNodes.Contains(this) || _links.Count == 0) return Unreachable;
-        return _links.Min(link => link.HopCount(destination, CopyWithThis(visitedNodes)));
     }
 
     private List<Node> NoVisitedNodes() => new();
