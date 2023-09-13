@@ -33,13 +33,9 @@ public class Node
     {
         if (this == destination) return new ActualPath();
         if (visitedNodes.Contains(this)) return None;
-        Path champion = None;
-        foreach (var link in _links)
-        {
-            var challenger = link.Path(destination, CopyWithThis(visitedNodes));
-            if (challenger.Cost() < champion.Cost()) champion = challenger;
-        }
-        return champion;
+        return _links
+            .Select(link => link.Path(destination, CopyWithThis(visitedNodes)))
+            .MinBy(p => p.Cost()) ?? None;
     }
 
     private double Cost(Node destination, CostStrategy strategy)
