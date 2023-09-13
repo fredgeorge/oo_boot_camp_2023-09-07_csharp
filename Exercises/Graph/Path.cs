@@ -4,12 +4,15 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
+using static System.Double;
+using static System.Int32;
+
 namespace Exercises.Graph;
 
 // Understands a route from one Node to another Node
 public interface Path
 {
-
+    internal static Path None = new NoPath();
     public double Cost();
 
     public int HopCount();
@@ -31,5 +34,14 @@ public interface Path
             return this;
         }
 
+    }
+
+    private class NoPath : Path
+    {
+        public double Cost() => PositiveInfinity;
+
+        public int HopCount() => Int32.MaxValue;
+
+        Path Path.Prepend(Link link) => this;
     }
 }

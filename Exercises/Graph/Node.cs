@@ -25,20 +25,19 @@ public class Node
     public Path Path(Node destination)
     {
         var result = Path(destination, NoVisitedNodes());
-        if (result == null) throw new ArgumentException("Destination is unreachable");
+        if (result == None) throw new ArgumentException("Destination is unreachable");
         return result;
     }
 
-    internal Path? Path(Node destination, List<Node> visitedNodes)
+    internal Path Path(Node destination, List<Node> visitedNodes)
     {
         if (this == destination) return new ActualPath();
-        if (visitedNodes.Contains(this)) return null;
-        Path? champion = null;
+        if (visitedNodes.Contains(this)) return None;
+        Path champion = None;
         foreach (var link in _links)
         {
             var challenger = link.Path(destination, CopyWithThis(visitedNodes));
-            if (challenger == null) continue;
-            if (champion == null || challenger.Cost() < champion.Cost()) champion = challenger;
+            if (challenger.Cost() < champion.Cost()) champion = challenger;
         }
         return champion;
     }
