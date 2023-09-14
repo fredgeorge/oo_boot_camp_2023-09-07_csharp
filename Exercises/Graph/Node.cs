@@ -16,26 +16,26 @@ public class Node
     private const double Unreachable = PositiveInfinity;
     private readonly List<Link> _links = new();
 
-    public bool CanReach(Node destination) => Cost(destination, NoVisitedNodes(), FewestHops) != Unreachable;
+    public bool CanReach(Node destination) => Cost(destination, NoVisitedNodes(), Link.FewestHops) != Unreachable;
 
-    public int HopCount(Node destination) => (int)Cost(destination, FewestHops);
+    public int HopCount(Node destination) => (int)Cost(destination, Graph.Link.FewestHops);
 
-    public double Cost(Node destination) => Cost(destination, LeastCost);
+    public double Cost(Node destination) => Cost(destination, Link.LeastCost);
 
     public Path Path(Node destination)
     {
-        var result = Path(destination, NoVisitedNodes());
+        var result = Path(destination, NoVisitedNodes(), Graph.Path.LeastCost);
         if (result == None) throw new ArgumentException("Destination is unreachable");
         return result;
     }
 
-    internal Path Path(Node destination, List<Node> visitedNodes)
+    internal Path Path(Node destination, List<Node> visitedNodes, PathStrategy strategy)
     {
         if (this == destination) return new ActualPath();
         if (visitedNodes.Contains(this)) return None;
         return _links
-            .Select(link => link.Path(destination, CopyWithThis(visitedNodes)))
-            .MinBy(p => p.Cost()) ?? None;
+            .Select(link => link.Path(destination, CopyWithThis(visitedNodes), strategy))
+            .MinBy(p => strategy(p)) ?? None;
     }
 
     private double Cost(Node destination, CostStrategy strategy)

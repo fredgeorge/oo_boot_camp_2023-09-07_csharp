@@ -4,6 +4,8 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
+using static Exercises.Graph.Path;
+
 namespace Exercises.Graph;
 
 // Understands a connection from one Node to another Node
@@ -28,8 +30,8 @@ internal class Link
     internal double Cost(Node destination, List<Node> visitedNodes, CostStrategy strategy) =>
         _target.Cost(destination, visitedNodes, strategy) + strategy(_cost);
 
-    internal Path Path(Node destination, List<Node> visitedNodes) =>
-        _target.Path(destination, visitedNodes).Prepend(this);
+    internal Path Path(Node destination, List<Node> visitedNodes, PathStrategy strategy) =>
+        _target.Path(destination, visitedNodes, strategy).Prepend(this);
 }
 
 public static class LinkExtensions
