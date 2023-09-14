@@ -21,7 +21,7 @@ public class Node
 
     public Path Path(Node destination) => Path(destination, LeastCost);
 
-    public List<Path> Paths(Node destination) => Paths(destination, NoVisitedNodes());
+    public List<Path> Paths(Node destination) => Paths().FilterByDestination(destination);
 
     public List<Path> Paths() => Paths(NoVisitedNodes());
 
@@ -30,15 +30,8 @@ public class Node
         if (visitedNodes.Contains(this)) return new();
         return _links
             .SelectMany(link => link.Paths(CopyWithThis(visitedNodes)))
-            .Concat(new List<Path> { new() })
+            .Concat(new List<Path> { new(this) })
             .ToList();
-    }
-
-    internal List<Path> Paths(Node destination, List<Node> visitedNodes)
-    {
-        if (this == destination) return new() { new Path() };
-        if (visitedNodes.Contains(this)) return new();
-        return _links.SelectMany(link => link.Paths(destination, CopyWithThis(visitedNodes))).ToList();
     }
 
     private Path Path(Node destination, PathStrategy strategy) =>

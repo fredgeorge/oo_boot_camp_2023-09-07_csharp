@@ -20,9 +20,6 @@ internal class Link
 
     internal static double Cost(List<Link> links) => links.Sum(l => l._cost);
 
-    internal List<Path> Paths(Node destination, List<Node> visitedNodes) =>
-        _target.Paths(destination, visitedNodes).Select(p => p.Prepend(this)).ToList();
-
     internal List<Path> Paths(List<Node> visitedNodes) =>
         _target.Paths(visitedNodes).Select(p => p.Prepend(this)).ToList();
 }
