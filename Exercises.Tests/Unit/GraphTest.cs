@@ -92,7 +92,19 @@ public class GraphTest
         Assert.Empty(B.Paths(G));
     }
 
-    private void AssertPath(int expectedHopCount, double expectedCost, Node source, Node destination)
+    [Fact]
+    public void AllPathsFrom()
+    {
+        Assert.Equal(1, A.Paths().Count);
+        Assert.Equal(9, B.Paths().Count);
+        Assert.Equal(15, C.Paths().Count);
+        Assert.Equal(6, D.Paths().Count);
+        Assert.Equal(7, E.Paths().Count);
+        Assert.Equal(1, F.Paths().Count);
+        Assert.Equal(1, G.Paths().Count);
+    }
+
+private void AssertPath(int expectedHopCount, double expectedCost, Node source, Node destination)
     {
         var path = source.Path(destination);
         Assert.Equal(expectedHopCount, path.HopCount());

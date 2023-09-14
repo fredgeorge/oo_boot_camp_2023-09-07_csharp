@@ -23,6 +23,17 @@ public class Node
 
     public List<Path> Paths(Node destination) => Paths(destination, NoVisitedNodes());
 
+    public List<Path> Paths() => Paths(NoVisitedNodes());
+
+    internal List<Path> Paths(List<Node> visitedNodes)
+    {
+        if (visitedNodes.Contains(this)) return new();
+        return _links
+            .SelectMany(link => link.Paths(CopyWithThis(visitedNodes)))
+            .Concat(new List<Path> { new() })
+            .ToList();
+    }
+
     internal List<Path> Paths(Node destination, List<Node> visitedNodes)
     {
         if (this == destination) return new() { new Path() };
