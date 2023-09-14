@@ -30,12 +30,9 @@ public class Node
         return _links.SelectMany(link => link.Paths(destination, CopyWithThis(visitedNodes))).ToList();
     }
 
-    private Path Path(Node destination, PathStrategy strategy)
-    {
-        var result = Path(destination, NoVisitedNodes(), strategy);
-        if (result == None) throw new ArgumentException("Destination is unreachable");
-        return result;
-    }
+    private Path Path(Node destination, PathStrategy strategy) =>
+        Paths(destination).MinBy(p => strategy(p))
+        ?? throw new ArgumentException("Destination is unreachable");
 
     internal Path Path(Node destination, List<Node> visitedNodes, PathStrategy strategy)
     {
