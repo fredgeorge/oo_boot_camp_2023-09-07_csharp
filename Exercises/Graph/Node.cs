@@ -21,6 +21,15 @@ public class Node
 
     public Path Path(Node destination) => Path(destination, LeastCost);
 
+    public List<Path> Paths(Node destination) => Paths(destination, NoVisitedNodes());
+
+    internal List<Path> Paths(Node destination, List<Node> visitedNodes)
+    {
+        if (this == destination) return new() { new ActualPath() };
+        if (visitedNodes.Contains(this)) return new();
+        return _links.SelectMany(link => link.Paths(destination, CopyWithThis(visitedNodes))).ToList();
+    }
+
     private Path Path(Node destination, PathStrategy strategy)
     {
         var result = Path(destination, NoVisitedNodes(), strategy);

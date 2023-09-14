@@ -24,6 +24,9 @@ internal class Link
 
     internal Path Path(Node destination, List<Node> visitedNodes, PathStrategy strategy) =>
         _target.Path(destination, visitedNodes, strategy).Prepend(this);
+
+    internal List<Path> Paths(Node destination, List<Node> visitedNodes) => 
+        _target.Paths(destination, visitedNodes).Select(p => p.Prepend(this)).ToList();
 }
 
 public static class LinkExtensions
