@@ -4,8 +4,6 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
-using static System.Double;
-using static Exercises.Graph.Link;
 using static Exercises.Graph.Path;
 
 namespace Exercises.Graph;
@@ -13,18 +11,19 @@ namespace Exercises.Graph;
 // Understands its neighbors
 public class Node
 {
-    private const double Unreachable = PositiveInfinity;
     private readonly List<Link> _links = new();
 
-    public bool CanReach(Node destination) => Cost(destination, NoVisitedNodes(), Link.FewestHops) != Unreachable;
+    public bool CanReach(Node destination) => Path(destination, NoVisitedNodes(), FewestHops) != None;
 
-    public int HopCount(Node destination) => (int)Cost(destination, Graph.Link.FewestHops);
+    public int HopCount(Node destination) => Path(destination, FewestHops).HopCount();
 
-    public double Cost(Node destination) => Cost(destination, Link.LeastCost);
+    public double Cost(Node destination) => Path(destination).Cost();
 
-    public Path Path(Node destination)
+    public Path Path(Node destination) => Path(destination, LeastCost);
+
+    private Path Path(Node destination, PathStrategy strategy)
     {
-        var result = Path(destination, NoVisitedNodes(), Graph.Path.LeastCost);
+        var result = Path(destination, NoVisitedNodes(), strategy);
         if (result == None) throw new ArgumentException("Destination is unreachable");
         return result;
     }
@@ -38,25 +37,11 @@ public class Node
             .MinBy(p => strategy(p)) ?? None;
     }
 
-    private double Cost(Node destination, CostStrategy strategy)
-    {
-        var result = Cost(destination, NoVisitedNodes(), strategy);
-        if (result == Unreachable) throw new ArgumentException("Destination is unreachable");
-        return result;
-    }
-
-    internal double Cost(Node destination, List<Node> visitedNodes, CostStrategy strategy)
-    {
-        if (this == destination) return 0;
-        if (visitedNodes.Contains(this) || _links.Count == 0) return Unreachable;
-        return _links.Min(link => link.Cost(destination, CopyWithThis(visitedNodes), strategy));
-    }
-
     private List<Node> NoVisitedNodes() => new();
 
     private List<Node> CopyWithThis(List<Node> originals) => new(originals) { this };
 
-    public LinkBuilder Cost(double amount) => new LinkBuilder(amount, _links);
+    public LinkBuilder Cost(double amount) => new(amount, _links);
 
     public class LinkBuilder
     {
