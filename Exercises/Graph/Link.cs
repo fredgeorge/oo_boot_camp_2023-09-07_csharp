@@ -4,8 +4,6 @@
  * @author Fred George  fredgeorge@acm.org
  */
 
-using static Exercises.Graph.Path;
-
 namespace Exercises.Graph;
 
 // Understands a connection from one Node to another Node
@@ -21,9 +19,6 @@ internal class Link
     }
 
     internal static double Cost(List<Link> links) => links.Sum(l => l._cost);
-
-    internal Path Path(Node destination, List<Node> visitedNodes, PathStrategy strategy) =>
-        _target.Path(destination, visitedNodes, strategy).Prepend(this);
 
     internal List<Path> Paths(Node destination, List<Node> visitedNodes) => 
         _target.Paths(destination, visitedNodes).Select(p => p.Prepend(this)).ToList();

@@ -13,7 +13,7 @@ public class Node
 {
     private readonly List<Link> _links = new();
 
-    public bool CanReach(Node destination) => Path(destination, NoVisitedNodes(), FewestHops) != None;
+    public bool CanReach(Node destination) => Paths(destination).Count > 0;
 
     public int HopCount(Node destination) => Path(destination, FewestHops).HopCount();
 
@@ -25,7 +25,7 @@ public class Node
 
     internal List<Path> Paths(Node destination, List<Node> visitedNodes)
     {
-        if (this == destination) return new() { new ActualPath() };
+        if (this == destination) return new() { new Path() };
         if (visitedNodes.Contains(this)) return new();
         return _links.SelectMany(link => link.Paths(destination, CopyWithThis(visitedNodes))).ToList();
     }
@@ -33,15 +33,6 @@ public class Node
     private Path Path(Node destination, PathStrategy strategy) =>
         Paths(destination).MinBy(p => strategy(p))
         ?? throw new ArgumentException("Destination is unreachable");
-
-    internal Path Path(Node destination, List<Node> visitedNodes, PathStrategy strategy)
-    {
-        if (this == destination) return new ActualPath();
-        if (visitedNodes.Contains(this)) return None;
-        return _links
-            .Select(link => link.Path(destination, CopyWithThis(visitedNodes), strategy))
-            .MinBy(p => strategy(p)) ?? None;
-    }
 
     private List<Node> NoVisitedNodes() => new();
 
